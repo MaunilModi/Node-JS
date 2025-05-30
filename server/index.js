@@ -1,39 +1,16 @@
-const http = require('http')
-const fs = require('fs')
-const url = require('url')
+const express = require('express')
 
-myServer = http.createServer((req, res) => {
+const app = express();
 
-    if(req.url === '/favicon.ico')
-        return res.end();
-
-    const log = `${Date.now()}: ${req.method} ${req.url} requist received\n`;
-    const myUrl = url.parse(req.url, true); // true basically parsh query parameters
-
-    fs.appendFile('log.txt', log, (err, data) => {
-
-        switch(myUrl.pathname)
-        {
-            case '/': res.end('HomePage')
-            break;
-
-            case '/about': res.end('I am Maunil Modi')
-            break
-
-            case '/search': 
-            const myName = myUrl.query.name;
-            res.end(`Hi, ${myName}`)
-            break;
-
-            case '/signup': 
-            if(req.method === 'GET') res.end('This is SignUp Form');
-            else if(req.methos === 'POST') res.end('Success')
-
-            default: res.end('404 Not found')
-        }
-
-        // res.end(`Hello from Server ${Date.now()}`)
-    })
+app.get('/', (req, res) => {
+    res.send("Hello from Home Page");
 })
 
-myServer.listen(8000, () => console.log('Server Stated'))
+app.get('/about', (req, res) => {
+    res.send("Hello from About page" + ' hi ' + req.query.name + '  You are ' + req.query.age)
+})
+
+app.listen(8000, () => console.log('Server Started'))
+// myServer = http.createServer(app)
+
+// myServer.listen(8000, () => console.log('Server Stated'))
