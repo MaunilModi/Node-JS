@@ -1,0 +1,21 @@
+REST API - JSON
+
+GET /users - list all users                      for HTML formate
+GET /api/users - list all users                      for JSON formate
+GET /api/users/1 - list user with id 1
+GET /api/users/2 - list user with id 2
+
+-> Dynamic parameters
+/api/user/:id
+:id - for variable id's
+
+POST /api/users - create new user
+
+PATCH /api/users/1 - update user with id 1
+
+
+// Take care of all clients
+in case of client is mobile application so mobile can't shows html data
+so, we have to return json data -> use /api
+
+in case of client is browser then just return json data
