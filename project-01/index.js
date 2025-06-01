@@ -9,6 +9,16 @@ const app = express();
 // Middleware - Pludgin
 app.use(express.urlencoded({extended:false}))
 
+app.use((req, res, next) => {
+    // console.log('Hello From Middleware 1');
+    // // return res.json({msg: 'Hello From Middleware 1'});  // ending request here and return response
+    // next(); // my work is done and call next
+
+    fs.appendFile('log.txt', `\n${Date.now()} : ${req.method}\n`, (err, result) => {
+        next();
+    });
+});
+
 app.get('/users', (req, res) => {
     const html = `
     <ul>
@@ -20,7 +30,7 @@ app.get('/users', (req, res) => {
 
 app.get('/api/users', (req, res) => {
     return res.json(users);
-})
+});
 // app.get('/api/users/:id', (req, res) => {
 //     const id = Number(req.params.id);
 //     const data = users.filter((user) => user.id === id);
