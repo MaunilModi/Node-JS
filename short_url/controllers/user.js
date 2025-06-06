@@ -23,8 +23,8 @@ async function handleUserLogin(req, res) {
     return res.render("login", { error: "Invalid Password or Username" });
 
   const token = setUser(user);
-  res.cookie("uid", token);
-  return res.redirect("/");
+  // res.cookie("uid", token);
+  return res.json({ token });
 }
 
 module.exports = { handleUserSignup, handleUserLogin };

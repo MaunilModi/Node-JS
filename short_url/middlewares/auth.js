@@ -1,11 +1,12 @@
 const { getUser } = require("../service/auth");
 
 async function restictToLoggedinUserOnly(req, res, next) {
-  const userId = req.cookies.uid;
+  const userId = req.headers["authorization"];
 
   if (!userId) return res.redirect("/login");
 
-  const user = getUser(userId);
+  const token = userId.split("Bearer ")[1]; // Bearer fsdfsfferrr2344
+  const user = getUser(token);
 
   if (!user) return res.redirect("/login");
 
@@ -14,8 +15,9 @@ async function restictToLoggedinUserOnly(req, res, next) {
 }
 
 async function checkAuth(req, res, next) {
-  const userId = req.cookies.uid;
-  const user = getUser(userId);
+  const userId = req.headers["authorization"];
+  const token = userId.split("Bearer ")[1];
+  const user = getUser(token);
   req.user = user;
   next();
 }
